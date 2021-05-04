@@ -1,0 +1,177 @@
+{% extends "layout.html" %}
+{% load crispy_forms_tags %}
+{% block body %}
+
+    <div class="profile_container">
+        <div class="profile_left_container" >
+            <img style="width: 150px; height: 150px;" class="rounded-circle account-img" src="{{user.profile.image.url}}">
+            <span style="text-transform: capitalize; place-self: center; letter-spacing: 4px; font-style: italic; font-size: 25px; color: gold; font-weight: 700;">{{user.username}}</span>
+           <div class="social_button">
+                <a type = "submit" href="{% url 'user:update_image' user.profile.id  %}" class = "btn btn-info btn-sm" name="image">Update Image</a>
+            </div>
+        </div>
+        <div class="profile_right_container1 ">
+            <div class="social_input add_interests" >
+                <form method="POST" enctype="multipart/form-data">
+                    <div>   
+                        {% csrf_token %}
+                        {{forms.interests_form1|crispy}}
+
+                        <!--<input type="text" name="interests" required id="id_interests">-->
+                    </div>
+                    <div class="social_button">
+                        <button type = "submit" class = "btn btn-info btn-sm">Update Interests</button>
+                    </div>
+                </form>
+            </div>   
+        </div>   
+    </div>
+   <!--
+    <FORM METHOD="POST" NAME="myForm">
+        <INPUT TYPE="HIDDEN" NAME="NAME1" VALUE="value1">
+        <INPUT TYPE="HIDDEN" NAME="NAME2" VALUE="value2">
+        </FORM>
+        
+        <A HREF="#" onClick="document.myForm.submit();return false">text link</A>
+    -->
+
+
+<div class="social_forms_container">
+    <div class="social_form_line">
+        <div  style="display: inline-block;">
+            <img class="social_icon" src="/static/- youtube.png">
+        </div>
+        <div class="social_input" >
+            <form method = "post" enctype="multipart/form-data">
+                <div>{% csrf_token %}
+                {{forms.youtube_form1|crispy}}
+                </div>
+                <div class="social_button">
+                    <button type = "submit" class = "btn btn-info btn-sm" name="youtube">Update Youtube</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+    <div class="social_form_line">
+        <div  style="display: inline-block;">
+            <img class="social_icon" src="/static/- Instagram_logo_2016.svg.png">
+        </div>
+        <div class="social_input">
+            <form method = "post" enctype="multipart/form-data">
+                <div>{% csrf_token %}
+                {{forms.instagram_form1|crispy}}</div>
+                <div class="social_button">
+                    <button type = "submit" class = "btn btn-info btn-sm" name="instagram">Update Instagram</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+    <div class="social_form_line">
+        <div  style="display: inline-block;">
+            <img class="social_icon" src="/static/- facebook.png">
+        </div>
+        <div class="social_input">
+            <form method = "post" enctype="multipart/form-data">
+                <div>{% csrf_token %}
+                {{forms.facebook_form1|crispy}}</div>
+                <div class="social_button">
+                    <button type = "submit" class = "btn btn-info btn-sm" name="facebook">Update Facebook</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+    <div class="social_form_line">
+        <div  style="display: inline-block;">
+            <img class="social_icon" src="/static/- twitter-logo.jpg">
+        </div>
+        <div class="social_input">
+            <form method = "post" enctype="multipart/form-data">
+                <div>{% csrf_token %}
+                {{forms.twitter_form1|crispy}}</div>
+                <div class="social_button">
+                    <button type = "submit" class = "btn btn-info btn-sm" name="twitter">Update Twitter</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+    <div class="social_form_line">
+        <div  style="display: inline-block;">
+            <img class="social_icon" src="/static/- SoundCloud-Logo.jpg">
+        </div>
+        <div class="social_input">
+            <form method = "post" enctype="multipart/form-data" >
+                <div>{% csrf_token %}
+                {{forms.soundcloud_form1|crispy}}</div>
+                <div class="social_button">
+                    <button type = "submit" class = "btn btn-info btn-sm" name="soundcloud">Update Soundcloud</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+    <div class="social_form_line">
+        <div  style="display: inline-block;">
+            <img class="social_icon" src="/static/- Spotify.png">
+        </div>
+        <div class="social_input">
+            <form method = "post" enctype="multipart/form-data">
+                <div>{% csrf_token %}
+                {{forms.spotify_form1|crispy}}</div>
+                <div class="social_button">
+                    <button type = "submit" class = "btn btn-info btn-sm" name="spotify">Update Spotify</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+
+    <div class="social_form_line">
+        <div  style="display: inline-block;">
+            <img class="social_icon" src="/static/email.png">
+        </div>
+        <div class="social_input">
+            <form method = "post" enctype="multipart/form-data">
+                <div>{% csrf_token %}
+                {{forms.email_form1|crispy}}</div>
+                <div class="social_button">
+                    <button type = "submit" class = "btn btn-info btn-sm" name="spotify">Update Email</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+
+
+    <div class="social_form_line">
+        <div  style="display: inline-block;">
+            <img class="social_icon" src="/static/phone.png">
+        </div>
+        <div class="social_input">
+            <form method = "post" enctype="multipart/form-data">
+                <div>{% csrf_token %}
+                {{forms.phone_form1|crispy}}</div>
+                <div class="social_button">
+                    <button type = "submit" class = "btn btn-info btn-sm" name="spotify">Update Phone</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+  {% endblock body %}

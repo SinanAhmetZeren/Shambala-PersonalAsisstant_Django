@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+{% load crispy_forms_tags %}
+{% block body %}
+
+<div class="profile_container">
+    <div class="profile_left_container" >
+        <img style="width: 150px; height: 150px;" class="rounded-circle account-img" src="{{user.profile.image.url}}">
+        <span style="text-transform: capitalize; place-self: center; letter-spacing: 4px; font-style: italic; font-size: 25px; color: gold; font-weight: 700;">{{user.username}}</span>
+    </div>
+    <div class="profile_right_container1 ">
+        <div class="social_input add_interests" >
+            <form method="POST" enctype="multipart/form-data">
+                <div>   
+                    {% csrf_token %}
+                    {{forms.Image_form|crispy}}
+
+                    <!--<input type="text" name="interests" required id="id_interests">-->
+                </div>
+                <div class="social_button">
+                    <button type = "submit" class = "btn btn-info btn-sm">Update Image</button>
+                </div>
+            </form>
+        </div>   
+    </div>   
+</div>
+
+
+
+
+
+
+
+
+
+
+  {% endblock body %}

@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+{% load crispy_forms_tags %}
+{% block body %}
+
+
+<div class="">
+    <br>
+    <div class="jumbotron text-center " style="color: mintcream ; border-radius: 10px; padding: 10px;
+        background-image: linear-gradient(#170227d7, #470e76ef), url(/static/purple\ background\ login\ pae.jpg); 
+        width: 60%; height: fit-content; margin:5px 15%;">
+        <h4>
+            <span style="text-transform: capitalize; letter-spacing: 2px; font-style: italic; font-size: 25px; ">
+            Users to Invite
+
+            </span>
+ 
+        </h4>
+    </div>
+
+
+
+
+<div class="links_container">
+    {% for item in qs %}
+    <div class="profile_line">
+        <div  style="display: inline-block;">
+            {% if item.user.profile.image == "default.jpg" %}
+            <img class="social_icon" src="/media/profile_pics/{{item.user.profile.image}}">
+            {% else %}
+            <img class="social_icon" src="/media/{{item.user.profile.image}}">
+            {% endif %}
+        </div>
+        <div class="social-id-display" style="display: inline-block;   align-self: center;">
+            <a  href="{% url 'user:public_profile' item.user.profile.id %}" >{{item.user}}</a>
+        </div>    
+    </div>   
+    {% endfor %}
+</div>
+
+
+<br><br><br>
+
+
+
+  {% endblock body %}

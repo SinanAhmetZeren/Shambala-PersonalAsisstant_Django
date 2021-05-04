@@ -1,0 +1,273 @@
+{% extends "layout.html" %}
+{% load crispy_forms_tags %}
+
+{% block body %}
+
+<div class="welcome">
+    <br>
+    <div class="jumbotron text-center animate__animated animate__fadeIn animate__delay-1s" style="color: mintcream ; border-radius: 10px; padding: 10px;
+        background-image: linear-gradient(#170227d7, #470e76ef), url(/static/purple\ background\ login\ pae.jpg); 
+        width: 70%; margin:5px 15%;">
+        <h2>Welcome to Shambala's Gates</h2>
+        <h4>
+            <span style="font-size: 55px;">&#129447;</span>
+            <span style="text-transform: capitalize; letter-spacing: 2px; font-style: italic; font-size: 25px; ">
+            {% if request.user.is_authenticated %}
+                Greetings <span style="color: gold;">{{request.user.username}}</span>
+            {% else %}
+                Greetings guest            
+            {% endif %}
+            </span>
+            <span style="font-size: 55px;">&#129436;</span>    
+            
+        </h4>
+    </div>
+</div>
+
+<!--<div style="background-color: white;">
+<div></div>
+<br>
+<div>{{measure_names1.measure_1_name}}</div>
+<br>
+<div>{{measure_values_dict.measure1list}}</div>
+<br>
+<div style="background-color: white;">{{corr_array}}</div>
+<div style="background-color: white;">{{measure_values_dict.measure1list}}</div>-->
+</div>
+
+<div  style="background-color: white; width: 50%; margin: 5% 25%; border-radius: 30px;">
+    <br><br><br>
+    <img style="width: 100%;" src="/static/correlations/{{request.user.username}}.png" alt="">
+    <!--<img src="/static/correlations/florestan1.png" alt="">-->
+<br><br><br>
+</div>
+
+<div class="graph-area animate__animated animate__fadeInRight animate__delay-2s" >
+    <canvas class="chart" id="chart1" style="background-color: rgb(255, 205, 205); margin-top: 10%; "></canvas>
+    <canvas class="chart" id="chart2" style="background-color: rgb(252, 244, 177); margin-top: 10%; "></canvas>
+    <canvas class="chart" id="chart3" style="background-color: rgb(204, 255, 207); margin-top: 10%; "></canvas>
+    <canvas class="chart" id="chart4" style="background-color: #ffefc2; margin-top: 10%; "></canvas>
+    <canvas class="chart" id="chart5" style="background-color: rgb(252, 244, 177); margin-top: 10%; "></canvas>
+    <canvas class="chart" id="chart6" style="background-color: rgb(204, 255, 207); margin-top: 10%; "></canvas> 
+
+    <script>
+        /*let chart1 = document.getElementById('chart1').getContext('2d');*/
+        /*let chart2 = document.getElementById('chart2').getContext('2d');*/
+        
+        // import date-fns locale:
+    // scale options:
+        
+        Chart.defaults.font.size = 40;
+        let measure1chart = new Chart (chart1, {
+            type: 'line',
+            lineWidth: 300,
+            borderWidth: 5,
+
+            data: {
+                /*labels: ['17/4/21','18/4/21','19/4/21','20/4/21','21/4/21' ],*/
+                /*labels:[{{measure_values_dict.datelist}}],*/
+
+                /*---- https://codepen.io/k3no/pen/pbYGVa ----*/ 
+                /*labels:{{measure_values_dict.datelist}},*/
+                /*labels:['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],*/
+                /*labels:{{measure_values_dict.datelist}},*/
+
+                datasets: [{
+                    label: '{{measure_names1.measure_1_name}}',
+                    fill: true,
+                    data:{{measure_values_dict.measure1list}},
+                    backgroundColor: '#fd474490',
+                    borderColor: "red",
+                    lineTension: 0.3,
+                    
+                },                 
+            ]},
+     
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 10
+                    },
+                    x: {
+                        type: 'category',
+                        labels: {{measure_values_dict.datelist}}
+
+                    }
+                },
+
+
+            },
+        });
+
+        let measure2chart = new Chart (chart2, {
+            type: 'line',
+            data: {
+
+                labels:['1','2','3','4','5',"6","7","8","9","10"],
+                datasets: [ {
+                    label: '{{measure_names1.measure_2_name}}',
+                    data:{{measure_values_dict.measure2list}},
+                    backgroundColor: '#34c80e90',
+                    fill: true,
+                    borderColor: "green",
+                    lineTension: 0.3,
+                },
+            ]
+            },
+
+               
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 10
+                    },
+                    x: {
+                        type: 'category',
+                        labels: {{measure_values_dict.datelist}}
+
+                    }
+                }
+            },
+        });
+
+        let measure3chart = new Chart (chart3, {
+            type: 'line',
+            data: {
+
+                labels:['1','2','3','4','5',"6","7","8","9","10"],
+                datasets: [{
+                    label: '{{measure_names1.measure_3_name}}',
+                    data:{{measure_values_dict.measure3list}},
+                    backgroundColor: '#0833f690',
+                    fill: true,
+                    borderColor: "blue",
+                    lineTension: 0.3,
+                },
+
+                
+            ]
+            },
+
+               
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 10
+                    },
+                    x: {
+                        type: 'category',
+                        labels: {{measure_values_dict.datelist}}
+
+                    }
+                }
+            },
+        });
+
+        let measure4chart = new Chart (chart4, {
+            type: 'line',
+            data: {
+
+                labels:['1','2','3','4','5',"6","7","8","9","10"],
+                datasets: [{
+                    label: '{{measure_names1.measure_4_name}}',
+                    data:{{measure_values_dict.measure4list}},
+                    backgroundColor: 'rgba(255, 255, 51, 0.4)',
+                    fill: true,
+                    borderColor: "yellow",
+                    lineTension: 0.3,
+                },
+                
+            ]
+            },
+
+               
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 10
+                    },
+                    x: {
+                        type: 'category',
+                        labels: {{measure_values_dict.datelist}}
+
+                    }
+                }
+            },
+        });
+
+        let measure5chart = new Chart (chart5, {
+            type: 'line',
+            data: {
+
+                labels:['1','2','3','4','5',"6","7","8","9","10"],
+                datasets: [{
+                    label: '{{measure_names1.measure_5_name}}',
+                    data:{{measure_values_dict.measure5list}},
+                    backgroundColor: '#ffae0071',
+                    fill: true,
+                    borderColor: "orange",
+                    lineTension: 0.3,
+                },
+
+                
+            ]
+            },
+
+               
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 10
+                    },
+                    x: {
+                        type: 'category',
+                        labels: {{measure_values_dict.datelist}}
+
+                    }
+                }
+            },
+        });
+
+        let measure6chart = new Chart (chart6, {
+            type: 'line',
+            data: {
+
+                labels:['1','2','3','4','5',"6","7","8","9","10"],
+                datasets: [{
+                    label: '{{measure_names1.measure_6_name}}',
+                    data:{{measure_values_dict.measure6list}},
+                    backgroundColor: '#40e0d070',
+                    fill: true,
+                    borderColor: "turquoise",
+                    lineTension: 0.3,
+                },
+
+                
+            ]
+            },
+
+               
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 10
+                    },
+                    x: {
+                        type: 'category',
+                        labels: {{measure_values_dict.datelist}}
+
+                    }
+                }
+            },
+        }); 
+    </script>
+
+</div>
+
+{% endblock body %}

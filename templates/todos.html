@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+
+<form class="todo-wrapper" method="POST">
+    {% csrf_token %}
+    <div class="todo-card" style="background-color: #6c15b3">
+        <div>
+            <p class="todo-text">Todo</p> 
+        </div>
+        <div>
+            <input class="todo-box" maxlength="50"size="50" type="text" style="background-color: #470e76;" name="title" id="title" placeholder="Enter to-do" required  >
+        </div>
+    </div>
+    <!--<a class = "btn btn-danger" href = "{% url 'todo:addtodo' %}">Add Todo </a>-->
+    <button type = "submit" class = "btn btn-info" style="margin-top: 10px; height: 60px ;background-color: #106aa7; border-color: #6c16b4;">Submit</button>
+</form>
+
+<hr>
+
+{% if messages %}
+{% for message in messages %}
+<br>
+<div style="color: mintcream ; border-radius: 10px; padding: 10px;
+background-image: linear-gradient(#170227d7, #470e76ef), url(/static/purple\ background\ login\ pae.jpg); 
+width: 40%; margin:5px 30%; text-align: center;border-color:#470e76ef" class="alert alert-{{ message.tags }}">{{ message }}</div>
+{% endfor %}
+{% endif %}
+
+{% if todo_list %}
+    <div class="line">
+        <div>Title</div>
+        <div>Date</div>
+        <div>Update</div>
+        <div>Delete</div>
+    </div>   
+        {% for todo in todo_list %}
+    <div class="line">
+        <div class="hover" id="{{todo.id}}"  onclick="copyToClipboard('#{{todo.id}}')">{{todo.title}}</div>
+        
+
+        <!--<div>{{todo.author.username}}</div>-->
+        <div>{{todo.created_date}}</div>
+        <div><a href="{% url 'todo:updatetodo' todo.id %}" class = "btn btn-info btn-sm">Update</a></div>
+        <div><a href="{% url 'todo:deletetodo' todo.id %}" class = "btn btn-info  btn-sm">Delete</a></div>
+    </div>   
+        {% endfor %}
+
+
+{% else %}
+
+{% endif %}
+<style type="text/css">
+    .hover:hover {
+        text-decoration: underline;
+        text-underline-offset: 5px;
+        transition: border 0.4s, color 0.4s;
+    }
+
+    .hover {
+        transition: text-decoration 0.5s;
+    }
+
+</style>
+{% endblock body %}
+

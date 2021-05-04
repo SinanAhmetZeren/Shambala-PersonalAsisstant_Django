@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% load crispy_forms_tags %}
+
+{% block body %}
+
+
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        
+        <div style="padding: 30px; border-radius: 30px; 
+        margin-top: 30px; background-size: cover;
+        background-image: linear-gradient(#170227d7, #470e76ef), url(/static/purple\ background\ login\ pae.jpg);">
+
+        <h3 style="color: white;">REGISTER</h3>
+        <form method = "post" style="color: white;">
+            {% csrf_token %}
+            
+            {{form|crispy}}
+            <button type = "submit" class = "btn btn-danger" 
+            style="background-color: #7e19d1 !important; float: right; border-color: #c691f2" >Register </button>
+
+            <br><br>
+        </form>
+        </div>
+    </div>
+  </div>
+
+{% endblock body %}

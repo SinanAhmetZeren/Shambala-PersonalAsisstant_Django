@@ -1,0 +1,298 @@
+{% extends "layout.html" %}
+{% load crispy_forms_tags %}
+{% block body %}
+
+
+
+
+
+<div class="">
+
+
+
+
+
+ <!------------------ 1.  FRIEND REQUESTs ------------------------>
+
+
+ <div class="jumbotron text-center " style="color: mintcream ; border-radius: 10px; padding: 10px;
+ background-image: linear-gradient(#170227d7, #470e76ef), url(/static/purple\ background\ login\ pae.jpg); 
+ width: 40%; height: fit-content; margin:5px 30%;">
+ <h4>
+     <span style="text-transform: capitalize; letter-spacing: 2px; font-style: italic; font-size: 25px; ">
+     {% if request.user.is_authenticated %}
+     Friend Requests for <span style="color: gold;">{{request.user.username}}</span> 
+
+     {% else %}
+    
+     {% endif %}
+
+     </span>
+ </h4>
+</div>
+
+
+ <div class="links_container">
+    {% for obj in object_list %}
+    {% if obj.user in rel_sender  and  request.user not in obj.friends.all %}            
+
+    <div class="profile_line_all_profiles">
+        <!--PROFILE IMAGE-->
+        <div  style="display: inline-block;">
+            <img class="social_icon" src="{{obj.image.url}}">
+        </div>
+
+        <!--PROFILE NAME AND LINK-->
+        <div class="social-id-display" style="display: inline-block;   align-self: center;">
+            <a href="{% url 'user:public_profile' obj.user.profile.id %}" >{{obj.user}}</a>
+        </div>    
+        <div></div>
+        <div>
+            <!-- ACCEPT FRIEND REQUEST -->
+            {% if obj.user in rel_sender  and  request.user not in obj.friends.all %}            
+        <div class="social_button" style="display: grid; grid-template-columns: 50% 50%;">
+            <div>
+                <form action="{% url 'user:accept-invitation' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="profile_pk" value={{obj.pk}}>
+                    <button type="submit" class = "btn btn-info" style="font-size: medium ;background-color: #10a79a; border-color: #6c16b4;"> Accept</button>
+                </form>
+            </div>
+            <div>
+                <form action="{% url 'user:reject-invitation' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="profile_pk" value={{obj.pk}}>
+                    <button type="submit" class = "btn btn-info" style="font-size: medium ;background-color: #9a10a7; border-color: #6c16b4;"> Reject</button>
+                </form>
+            </div>
+        </div>
+
+            {% endif %} 
+        </div>
+    </div>
+    {% endif %}
+   
+    {% endfor %}
+</div>
+
+
+ <!------------------ 2.  FRIENDS ------------------------>
+ <div class="jumbotron text-center " style="color: mintcream ; border-radius: 10px; padding: 10px;
+ background-image: linear-gradient(#170227d7, #470e76ef), url(/static/purple\ background\ login\ pae.jpg); 
+ width: 40%; height: fit-content; margin:5px 30%;">
+ <h4>
+     <span style="text-transform: capitalize; letter-spacing: 2px; font-style: italic; font-size: 25px; ">
+     {% if request.user.is_authenticated %}
+         <span style="color: gold;">{{request.user.username}}'s</span> Friends
+
+     {% else %}
+    
+     {% endif %}
+
+     </span>
+ </h4>
+</div>
+ <div class="links_container">
+    {% for obj in object_list %}
+    {% if request.user in obj.friends.all %} <!-- if friends... -->
+
+    <div class="profile_line_all_profiles">
+        <!--PROFILE IMAGE-->
+        <div  style="display: inline-block;">
+            <img class="social_icon" src="{{obj.image.url}}">
+        </div>
+
+        <!--PROFILE NAME AND LINK-->
+        <div class="social-id-display" style="display: inline-block;   align-self: center;">
+            <a href="{% url 'user:public_profile' obj.user.profile.id %}" >{{obj.user}}</a>
+        </div>    
+
+            <!-- REMOVE FROM FRIENDS -->
+            {% if request.user in obj.friends.all %} <!-- if friends... -->
+            <div class="social_button" style="display: inline-block;">
+                <form action="{% url 'user:remove-friend' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="profile_pk" value={{obj.pk}}>
+                    {% if request.user in obj.friends.all %} <!-- if friends... -->
+                    <button type="submit" class = "btn btn-info" style="font-size: medium ;background-color: #a73310; border-color: #6c16b4;"> Remove from friends</button>
+                    {% endif %} 
+                </form>
+            </div>
+            {% endif %}
+    </div>   
+    {% endif %}
+    {% endfor %}
+</div>
+
+
+ <!------------------ 3. WAITING FOR APPROVAL ------------------------>
+ <div class="jumbotron text-center " style="color: mintcream ; border-radius: 10px; padding: 10px;
+ background-image: linear-gradient(#170227d7, #470e76ef), url(/static/purple\ background\ login\ pae.jpg); 
+ width: 40%; height: fit-content; margin:5px 30%;">
+ <h4>
+     <span style="text-transform: capitalize; letter-spacing: 2px; font-style: italic; font-size: 25px; ">
+     {% if request.user.is_authenticated %}
+         <span style="color: gold;">{{request.user.username}}'s</span> Friend Requests
+
+     {% else %}
+    
+     {% endif %}
+
+     </span>
+ </h4>
+</div>
+ <div class="links_container">
+    {% for obj in object_list %}
+    {% if obj.user in rel_receiver and request.user not in obj.friends.all %} <!-- we have sent user an invitation but not friended yet -->
+
+    <div class="profile_line_all_profiles">
+        <!--PROFILE IMAGE-->
+        <div  style="display: inline-block;">
+            <img class="social_icon" src="{{obj.image.url}}">
+        </div>
+
+        <!--PROFILE NAME AND LINK-->
+        <div class="social-id-display" style="display: inline-block;   align-self: center;">
+            <a href="{% url 'user:public_profile' obj.user.profile.id %}" >{{obj.user}}</a>
+        </div>    
+
+        <div>
+               <!-- WAITING FOR APPROVAL -->
+            {% if obj.user in rel_receiver and request.user not in obj.friends.all %} <!-- we have sent user an invitation but not friended yet -->
+            <div class="social_button" style="display: inline-block;">
+                <button type="submit" class = "btn btn-info" style="font-size: medium ;background-color: #106ba7; border-color: #6c16b4;"> Waiting for approval </button>
+            </div>
+            {% endif %} 
+
+        </div>
+    </div>   
+    {% endif %}
+    {% endfor %}
+</div>
+
+
+
+
+
+ <!------------------ 4 . ADD TO FRIENDS ------------------------>
+ <div class="jumbotron text-center " style="color: mintcream ; border-radius: 10px; padding: 10px;
+ background-image: linear-gradient(#170227d7, #470e76ef), url(/static/purple\ background\ login\ pae.jpg); 
+ width: 40%; height: fit-content; margin:5px 30%;">
+ <h4>
+     <span style="text-transform: capitalize; letter-spacing: 2px; font-style: italic; font-size: 25px; ">
+     {% if request.user.is_authenticated %}
+         <!--<span style="color: gold;">{{request.user.username}}'s</span>--> All Users
+
+     {% else %}
+    
+     {% endif %}
+
+     </span>
+ </h4>
+</div>
+<div class="links_container">
+    {% for obj in object_list %}
+    {% if obj.user not in rel_receiver and obj.user not in rel_sender %} <!-- no relationship yet -->
+
+    <div class="profile_line_all_profiles">
+        <!--PROFILE IMAGE-->
+        <div  style="display: inline-block;">
+            <img class="social_icon" src="{{obj.image.url}}">
+        </div>
+
+        <!--PROFILE NAME AND LINK-->
+        <div class="social-id-display" style="display: inline-block;   align-self: center;">
+            <a href="{% url 'user:public_profile' obj.user.profile.id %}" >{{obj.user}}</a>
+        </div>    
+
+        <div>
+            <!-- ADD TO FRIENDS -->
+            <div class="social_button" style="display: inline-block;">
+                <form action="{% url 'user:send-invite' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="profile_pk" value={{obj.pk}}>
+                    {% if obj.user not in rel_receiver and obj.user not in rel_sender %} <!-- no relationship yet -->
+                    <button type="submit" class = "btn btn-info" style="font-size: medium ;background-color: #10a761; border-color: #6c16b4;">  Add to Friends </button>
+                    {% endif %} 
+                </form>
+            </div>
+
+        </div>
+    </div>   
+    {% endif %}
+    {% endfor %}
+</div>
+
+
+
+
+
+
+<br>
+
+<!--
+<div class="links_container">
+    {% for obj in object_list %}
+    <div class="profile_line_all_profiles">
+        <!--PROFILE IMAGE--
+        <div  style="display: inline-block;">
+            <img class="social_icon" src="{{obj.image.url}}">
+        </div>
+
+        <!--PROFILE NAME AND LINK--
+        <div class="social-id-display" style="display: inline-block;   align-self: center;">
+            <a href="{% url 'user:public_profile' obj.user.profile.id %}" >{{obj.user}}</a>
+        </div>    
+
+        <div>
+            <!-- ADD TO FRIENDS --
+            {% if obj.user not in rel_receiver and obj.user not in rel_sender %} <!-- no relationship yet --
+            <div class="social_button" style="display: inline-block;">
+                <form action="{% url 'user:send-invite' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="profile_pk" value={{obj.pk}}>
+                    {% if obj.user not in rel_receiver and obj.user not in rel_sender %} <!-- no relationship yet --
+                    <button type="submit" class = "btn btn-info" style="font-size: medium ;background-color: #10a761; border-color: #6c16b4;">  Add to Friends </button>
+                    {% endif %} 
+                </form>
+            </div>
+            {% endif %}
+
+            <!-- WAITING FOR APPROVAL --
+            {% if obj.user in rel_receiver and request.user not in obj.friends.all %} <!-- we have sent user an invitation but not friended yet --
+            <div class="social_button" style="display: inline-block;">
+                <button type="submit" class = "btn btn-info" style="font-size: medium ;background-color: #106ba7; border-color: #6c16b4;"> Waiting for approval </button>
+            </div>
+            {% endif %} 
+
+            <!-- REMOVE FROM FRIENDS --
+            {% if request.user in obj.friends.all %} <!-- if friends... --
+            <div class="social_button" style="display: inline-block;">
+                <form action="{% url 'user:remove-friend' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="profile_pk" value={{obj.pk}}>
+                    {% if request.user in obj.friends.all %} <!-- if friends... --
+                    <button type="submit" class = "btn btn-info" style="font-size: medium ;background-color: #a73310; border-color: #6c16b4;"> Remove from friends</button>
+                    {% endif %} 
+                </form>
+            </div>
+            {% endif %} 
+
+
+            <!-- ACCEPT FRIEND REQUEST --
+            {% if obj.user in rel_sender  and  request.user not in obj.friends.all %}            
+            <div class="social_button" style="display: inline-block;">
+                <form action="{% url 'user:remove-friend' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="profile_pk" value={{obj.pk}}>
+                    <button type="submit" class = "btn btn-info" style="font-size: medium ;background-color: #10a79a; border-color: #6c16b4;"> Accept request</button>
+                </form>
+            </div>
+            {% endif %} 
+        </div>
+    </div>   
+    {% endfor %}
+</div> -->
+
+
+  {% endblock body %}

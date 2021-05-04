@@ -1,0 +1,69 @@
+
+
+/********  REUSABLE COMPONENTS  *************/
+
+.row.header-row {    
+    margin: 0 auto;
+    background-color: #3e0c67;
+
+}
+
+
+.main-nav {
+    float: right;
+    list-style: none;
+    margin-top: 15px;
+}
+
+.left{
+    width: 50%;
+
+}
+
+.left .shambala {
+    font-family: 'Dancing Script', cursive;
+    font-size: 130%;
+    letter-spacing: 3px;
+}
+
+.left .analyze {
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding-top: 3px;
+}
+
+.right{
+    width: 50%;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding-top: 3px;
+}
+
+.right li {
+    float: right;
+    padding-right: 30px;
+}
+
+.main-nav li {
+    display: inline-block;
+    margin-left: 20px;
+}
+
+.main-nav li a:link,
+.main-nav li a:visited {
+    padding: 3px 0;
+    color:#f5ecfd;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 80%;
+    font-weight: 600;
+    border-bottom: 2px solid transparent;
+    transition: border-bottom 0.2s;
+}
+
+.main-nav li a:hover,
+.main-nav li a:active {
+    border-bottom: 2px solid #f5ecfd;
+}
+
+
+
+.dropdown-menu.dropdown-item {display: inline-block; width: 100%; padding: 10px 5px; color: #3e0c67;}

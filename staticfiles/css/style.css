@@ -1,0 +1,89 @@
+/***************** BASIC SETTING ****************/
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/*body {
+    background-image: url(/static/flower\ of\ life.jpg);
+    /*background-size: 100px;*-/
+    height: 100vh;
+
+}*/
+
+
+html,
+body {
+    /*background-color: #fff;*/
+    background-image: url(/static/flower\ of\ life.jpg);
+    /*background-size: 100px;*/
+    height: 100vh;
+    color: white;
+    font-family: 'Lato', 'Arial', sans-serif;
+    font-weight: 300;
+    font-size: 20px;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+}
+
+.clearfix {zoom: 1;}
+.clearfix:after {
+    content: '.';
+    clear: both;
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+
+h1,
+h2,
+h3 {
+    color: white;
+}
+
+/******************** WRAPPER *****************/
+
+.wrapper {
+    /*width: 100%;*/
+    padding:0 5%;
+    /*margin: auto;*/
+    display: grid; 
+    grid-template-columns: 30% 30% 30%;
+    grid-gap: 1em;
+    justify-content: space-around;
+}
+
+.wrapper > div {
+    color: white;
+    padding: 0;
+    border-radius: 30px;
+    min-height: 130px;
+    display: grid;    
+    justify-content: space-around;
+    align-content: center;
+    /*align-items: center;*/
+    /*grid-gap: 20px;*/
+}
+
+/*.score-card {
+    display: grid;    
+    justify-content: space-around;
+    align-content: center;
+    grid-gap: 20px;
+}*/
+
+.wrapper > div:nth-child(3n) {background:#b673ee;}
+.wrapper > div:nth-child(3n+1) {background:#871be1;}
+.wrapper > div:nth-child(3n+2) {background:#470e76;}
+
+.score-box:nth-child(3n) {background-color: #be82f0; }
+.score-box:nth-child(3n+1) {background-color: #871be1;}
+.score-box:nth-child(3n+2) {background-color: #470e76;}
+
+.score-box::placeholder {color: #7517c2; text-align: center;}
+
+.measure { text-align: center; padding-bottom: 10px;}
+

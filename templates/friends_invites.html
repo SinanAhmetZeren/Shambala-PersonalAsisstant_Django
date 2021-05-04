@@ -1,0 +1,89 @@
+{% extends "layout.html" %}
+{% load crispy_forms_tags %}
+{% block body %}
+
+<div class="">
+    <br>
+    <div class="jumbotron text-center " style="color: mintcream ; border-radius: 10px; padding: 10px;
+        background-image: linear-gradient(#170227d7, #470e76ef), url(/static/purple\ background\ login\ pae.jpg); 
+        width: 60%; height: fit-content; margin:5px 15%;">
+        <h4>
+            <span style="text-transform: capitalize; letter-spacing: 2px; font-style: italic; font-size: 25px; ">
+            {% if request.user.is_authenticated %}
+                <span style="color: gold;">{{request.user.username}}'s</span> Friends
+
+            {% else %}
+           
+            {% endif %}
+
+            </span>
+        </h4>
+    </div>
+
+
+<div class="links_container">
+    {% for friend in profile.friends.all %}
+    <div class="profile_line">
+        <div  style="display: inline-block;">
+            {% if friend.profile.image == "default.jpg" %}
+            <img class="social_icon" src="/media/profile_pics/{{friend.profile.image}}">
+            {% else %}
+            <img class="social_icon" src="/media/{{friend.profile.image}}">
+            {% endif %}
+        </div>
+        <div class="social-id-display" style="display: inline-block;   align-self: center;">
+            <a  href="{% url 'user:public_profile' friend.profile.id %}" >{{friend}}</a>
+        </div>    
+    </div>   
+    {% endfor %}
+</div>
+
+
+<!--<a class="btn btn-primary" style="margin-top: 30px;background-color: #106aa7; 
+border-color: #6c16b4; margin-left: 40%;" href="{% url 'user:update_profile'  profile.id %}" role="button">Update Profile</a>
+-->
+
+
+<div class="">
+    <br>
+    <div class="jumbotron text-center " style="color: mintcream ; border-radius: 10px; padding: 10px;
+        background-image: linear-gradient(#170227d7, #470e76ef), url(/static/purple\ background\ login\ pae.jpg); 
+        width: 60%; height: fit-content; margin:5px 15%;">
+        <h4>
+            <span style="text-transform: capitalize; letter-spacing: 2px; font-style: italic; font-size: 25px; ">
+            {% if request.user.is_authenticated %}
+                <span style="color: gold;">{{request.user.username}}'s</span> Friends Requests
+            {% else %}
+            {% endif %}
+            </span>
+        </h4>
+</div>
+
+
+{% if is_empty %}
+<h1 style="color: white;"></h1>
+{% endif %}
+
+<div class="links_container">
+    {% for item in qs %}
+    <div class="profile_line">
+        <div  style="display: inline-block;">
+            {% if item.profile.image == "default.jpg" %}
+            <img class="social_icon" src="/media/profile_pics/{{item.image}}">
+            {% else %}
+            <img class="social_icon" src="/media/{{item.image}}">
+            {% endif %}
+        </div>
+        <div class="social-id-display" style="display: inline-block;   align-self: center;">
+            <a  href="{% url 'user:public_profile' item.id %}" >{{item.user.username}}</a>
+        </div>    
+    </div>   
+    {% endfor %}
+</div>
+
+
+<br><br><br>
+
+
+
+  {% endblock body %}

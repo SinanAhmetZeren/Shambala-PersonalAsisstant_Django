@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+{% load crispy_forms_tags %}
+
+{% block body %}
+
+<div class="welcome">
+    <br>
+    <div class="jumbotron text-center animate__animated animate__fadeIn animate__delay-1s" style="color: mintcream ; border-radius: 10px; padding: 10px;
+        background-image: linear-gradient(#170227d7, #470e76ef), url(/static/purple\ background\ login\ pae.jpg); 
+        width: 70%; margin:5px 15%;">
+        <h2>Welcome to Shambala's Gates</h2>
+        <h4>
+            <span style="font-size: 55px;">&#129447;</span>
+            <span style="text-transform: capitalize; letter-spacing: 2px; font-style: italic; font-size: 25px; ">
+            {% if request.user.is_authenticated %}
+                Greetings <span style="color: gold;">{{request.user.username}}</span>
+            {% else %}
+                Greetings guest            
+            {% endif %}
+            </span>
+            <span style="font-size: 55px;">&#129436;</span>    
+        </h4>
+    </div>
+    <div>
+        <br>
+        <div class="jumbotron text-center animate__animated animate__fadeIn animate__delay-1s" style="color: mintcream ; border-radius: 10px;
+            background-image: linear-gradient(#170227d7, #470e76ef), url(/static/purple\ background\ login\ pae.jpg); 
+            width: 40%; margin:5px 30%; padding: 10px; " >
+            <h4>
+                <span  style="text-transform: capitalize; letter-spacing: 1px; font-size: 18px;">
+                    Currently monitoring:
+                    <hr color="white">
+                {% if measure_names1.measure_1_name %}
+    
+                    {{measure_names1.measure_1_name}} , 
+                    {{measure_names1.measure_2_name}} ,<br>
+                    {{measure_names1.measure_3_name}} ,
+                    {{measure_names1.measure_4_name}} ,<br>
+                    {{measure_names1.measure_5_name}} ,
+                    {{measure_names1.measure_6_name}} 
+
+                {% else %}
+
+                {% endif %}
+
+                </span>
+            </h4>
+        </div>
+    </div>
+    
+</div>
+<form class="wrapper" method="POST">
+    {% csrf_token %}
+
+    <div class="score-card">
+        <h6 class="measure">Name of Measure 1</h6> 
+        <input type="text" name="measure_1_name" id="measure_1_name" placeholder="Name of Measure" required class="score-box" >
+    </div>
+    <div class="score-card">
+        <h6 class="measure">Name of Measure 2</h6>
+        <input type="text" name="measure_2_name" id="measure_2_name" placeholder="Name of Measure" required class="score-box" >
+    </div>
+    <div class="score-card">
+        <h6 class="measure">Name of Measure 3</h6>
+        <input type="text" name="measure_3_name" id="measure_3_name" placeholder="Name of Measure" required class="score-box" >
+    </div>
+    <div class="score-card">
+        <h6 class="measure">Name of Measure 4</h6>
+        <input type="text" name="measure_4_name" id="measure_4_name" placeholder="Name of Measure" required class="score-box" >
+    </div>
+    <div class="score-card">
+        <h6 class="measure">Name of Measure 5</h6>
+        <input type="text" name="measure_5_name" id="measure_5_name" placeholder="Name of Measure" required class="score-box" >
+    </div>
+    <div class="score-card">
+        <h6 class="measure">Name of Measure 6</h6>
+        <input type="text" name="measure_6_name" id="measure_6_name" placeholder="Name of Measure" required class="score-box" >
+    </div>
+<button type = "submit" class = "btn btn-info" style="margin-top: 30px; height: 60px ;background-color: #106aa7; border-color: #6c16b4;">Submit</button>
+
+<br><br><br><br><br><br>
+
+{% endblock body %}
